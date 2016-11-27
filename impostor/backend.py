@@ -4,8 +4,7 @@ import django.contrib.auth as auth
 from django.contrib.auth.models import Group
 from django.http import HttpRequest
 from models import ImpostorLog
-from rest_framework import authentication
-from rest_framework import exceptions
+
 
 from django.conf import settings
 
@@ -28,7 +27,7 @@ def find_request():
     return request
 
 
-class AuthBackend(authentication.BaseAuthentication):
+class AuthBackend:
     supports_anonymous_user = False
     supports_object_permissions = False
     supports_inactive_user = False
