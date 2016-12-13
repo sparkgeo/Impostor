@@ -32,7 +32,7 @@ class AuthBackend:
     supports_object_permissions = False
     supports_inactive_user = False
 
-    def authenticate(username=None, password=None):
+    def authenticate(self, username=None, password=None):
 
         try:
             from django.contrib.auth import get_user_model
