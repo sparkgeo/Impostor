@@ -1,19 +1,19 @@
 
 from django.db import models
 import hashlib, time
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 
 
 class ImpostorLog(models.Model):
-    try:
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-    except ImportError:
-        from django.contrib.auth.models import User
 
-    impostor = models.ForeignKey(User, related_name='impostor', db_index=True)
-    imposted_as = models.ForeignKey(User, related_name='imposted_as', verbose_name='Logged in as', db_index=True)
+    user = getattr(settings, 'AUTH_USER_MODEL', User)
+
+    impostor = models.ForeignKey(user, related_name='impostor', db_index=True)
+    imposted_as = models.ForeignKey(user, related_name='imposted_as', verbose_name='Logged in as', db_index=True)
     impostor_ip = models.GenericIPAddressField(verbose_name="Impostor's IP address", null=True, blank=True)
     logged_in = models.DateTimeField(auto_now_add=True, verbose_name='Logged on')
     # These last two will come into play with Django 1.3+, but are here now for easier migration
