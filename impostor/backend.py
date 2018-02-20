@@ -86,8 +86,9 @@ class AuthBackend:
                         # take only the first one, which is the client's address
                         if ',' in ip_addr:
                             ip_addr = ip_addr.split(',', 1)[0].strip()
-                            log_entry = ImpostorLog.objects.create(impostor=admin_obj, imposted_as=auth_user,
-                                                                   impostor_ip=ip_addr)
+                    log_entry = ImpostorLog.objects.create(impostor=admin_obj,
+                                                           imposted_as=auth_user,
+                                                           impostor_ip=ip_addr)
 
                     if log_entry.token and request:
                         request.session['impostor_token'] = log_entry.token
